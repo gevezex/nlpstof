@@ -17,16 +17,16 @@ def tokenize_sentences(sentences):
 
 import nltk 
 
-def paragraph2sentences(paragraph):
+def document2sentences(document):
     '''input: large string document
        output: list of sentences in string format'''
-    sent_text = nltk.sent_tokenize(paragraph)
+    sent_text = nltk.sent_tokenize(document)
     return sent_text
 
 def document2sent2tokens(document):
     """input: large string document
     output: list of tokens per sentence """
     
-    sent_text = paragraph2sentences(document)
+    sent_text = document2sentences(document)
     tokenized_sentences = tokenize_sentences(sent_text)
     return tokenized_sentences
