@@ -3,11 +3,11 @@ import spacy
 def tokenize_sentence(sentence, spacy_model="nl"):
     """
     input: sentence string
-    output: tokenized list of words'''
+    output: tokenized list of words
+    """
     nlp = spacy.load(spacy_model)
     doc = nlp(sentence)
     return [token.text for token in doc]
-    """
 
 def tokenize_sentences(sentences, spacy_model="nl"):
     """
@@ -27,9 +27,10 @@ def document2sentences(document):
     """
     input: large string document
     output: list of sentences in string format
+    """
     sent_text = nltk.sent_tokenize(document)
     return sent_text
-    """
+    
 
 def document2sent2tokens(document, spacy_model="nl"):
     """
