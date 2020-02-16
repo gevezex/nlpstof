@@ -13,3 +13,11 @@ def tokenize_sentences(sentences):
     nlp = spacy.load('nl')
     list_of_sentence_tokens = [[token.text for token in nlp(sent)] for sent in sentences]
     return list_of_sentence_tokens
+
+import nltk 
+
+def paragraph2sentences(paragraph):
+    '''input: large string document
+       output: list of sentences in string format'''
+    sent_text = nltk.sent_tokenize(paragraph)
+    return sent_text
