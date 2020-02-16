@@ -23,12 +23,19 @@ def tokenize_sentences(sentences, spacy_model="nl"):
 
 import nltk 
 
-def document2sentences(document):
+def document2sentences(document, language='dutch', eol=True):
     """
     input: large string document
     output: list of sentences in string format
     """
     sent_text = nltk.sent_tokenize(document)
+    if eol:
+        tmp_list = ['Eerste zin']
+        for sentence in sent_text:
+            tmp_list.extend(sentence.split('\n'))
+        del tmp_list[0]
+        sent_text = tmp_list
+
     return sent_text
     
 
