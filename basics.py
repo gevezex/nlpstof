@@ -62,8 +62,8 @@ class documentTokenizer:
         
         if spacy_model is None:
             spacy_model = self.language
-        sent_text = document2sentences(document)
-        tokenized_sentences = tokenize_sentences(sent_text, spacy_model)
+        sent_text = self.document2sentences(document)
+        tokenized_sentences = self.tokenize_sentences(sent_text, spacy_model)
         return tokenized_sentences
     
     def pdf2text(self, fname, pages=None):
