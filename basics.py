@@ -10,15 +10,14 @@ from pdfminer.pdfpage import PDFPage
 
 
 class documentTokenizer:
-    """ Tokenizer for documents """
+    """Tokenizer for documents"""
 
     def __init__(self, language='nl', eol=True):
         self.language = language
         self.eol = eol
 
     def tokenize_sentence(self, sentence):
-        """
-        input: sentence string
+        """Input: sentence string
         output: tokenized list of words
         """
         nlp = spacy.load(self.language)
@@ -26,8 +25,7 @@ class documentTokenizer:
         return [token.text for token in doc]
 
     def tokenize_sentences(self, sentences, spacy_model=None):
-        """
-        input: list of sentences in strings
+        """Input: list of sentences in strings
         input: spacy_model, default = dutch
         output: tokenized list of tokenized sentences
         """
@@ -41,8 +39,7 @@ class documentTokenizer:
 
 
     def document2sentences(self, document, language='dutch', eol=None):
-        """
-        input: large string document
+        """Input: large string document
         output: list of sentences in string format
         """
         if eol is None:
@@ -58,8 +55,7 @@ class documentTokenizer:
         return sent_text
 
     def document2sent2tokens(self, document, spacy_model=None):
-        """
-        input: large string document
+        """Input: large string document
         input: spacy_model, default = dutch
         output: list of tokens per sentence
         """
@@ -71,8 +67,7 @@ class documentTokenizer:
         return tokenized_sentences
     
     def pdf2text(self, fname, pages=None):
-        """
-        input:
+        """Input:
             fname: path/filename
             pages: list of page numbers (integers) or None for whole document
         output: 
