@@ -1,5 +1,12 @@
 import spacy 
-import nltk 
+import nltk
+
+# PdfMiner
+from io import StringIO
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
 
 
 def tokenize_sentence(sentence, spacy_model="nl"):
@@ -113,3 +120,40 @@ class documentTokenizer:
         sent_text = document2sentences(document)
         tokenized_sentences = tokenize_sentences(sent_text, spacy_model)
         return tokenized_sentences
+    
+    def pdf2text(self, fname, pages=None):
+        """
+        input:
+            fname: path/filename
+            pages: list of page numbers (integers) or None for whole document
+        output: 
+            dictionary with: 
+                key = pagenumber (int)
+                value = page text (str)
+        """
+        if not pages:
+            pagenums = set()
+        else:
+            pagenums = list(set(pages))
+
+        page_text = {}
+        output = StringIO()
+        manager = PDFResourceManager()
+        converter = TextConverter(manager, output, laparams=LAParams())
+        interpreter = PDFPageInterpreter(manager, converter)
+    
+        infile = open(fname, 'rb')
+        for page_nr, page in enumerate(PDFPage.get_pages(infile, pagenums)):
+            interpreter.process_page(page)
+            data = output.getvalue()
+            if pages is None:
+                page_text[page_nr+1] = data
+            else:
+                page_text[pagenums[page_nr]] = data
+            output.truncate(0)
+            output.seek(0)
+        infile.close()
+        converter.close()
+        output.close
+            
+        return page_text
