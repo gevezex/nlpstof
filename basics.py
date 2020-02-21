@@ -85,12 +85,13 @@ class documentTokenizer:
         else:
             pagenums = list(set(pages))
 
-        page_text = {}
         output = StringIO()
         manager = PDFResourceManager()
         converter = TextConverter(manager, output, laparams=LAParams())
         interpreter = PDFPageInterpreter(manager, converter)
-    
+
+        page_text = {}
+
         infile = open(fname, 'rb')
         for page_nr, page in enumerate(PDFPage.get_pages(infile, pagenums)):
             interpreter.process_page(page)
@@ -99,8 +100,11 @@ class documentTokenizer:
                 page_text[page_nr+1] = data
             else:
                 page_text[pagenums[page_nr]] = data
+
+            # empty StringIO after every page and go back to position 0 
             output.truncate(0)
             output.seek(0)
+
         infile.close()
         converter.close()
         output.close
