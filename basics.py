@@ -15,13 +15,14 @@ class documentTokenizer:
     def __init__(self, language='nl', eol=True):
         self.language = language
         self.eol = eol
+        self.nlp = spacy.load(self.language)
 
     def tokenize_sentence(self, sentence):
         """Input: sentence string
         output: tokenized list of words
         """
-        nlp = spacy.load(self.language)
-        doc = nlp(sentence)
+        #nlp = spacy.load(self.language)
+        doc = self.nlp(sentence)
         return [token.text for token in doc]
 
     def tokenize_sentences(self, sentences, spacy_model=None):
@@ -32,9 +33,9 @@ class documentTokenizer:
         
         if spacy_model is None:
             spacy_model = self.language
-        nlp = spacy.load(spacy_model)
+        #nlp = spacy.load(spacy_model)
         #list_of_sentence_tokens = [[token.text for token in nlp(sent)] for sent in sentences]
-        list_of_sentence_tokens = [[token.text for token in doc] for doc in nlp.pipe(sentences)]
+        list_of_sentence_tokens = [[token.text for token in doc] for doc in self.nlp.pipe(sentences)]
         return list_of_sentence_tokens
 
 
